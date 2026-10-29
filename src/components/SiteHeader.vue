@@ -7,7 +7,10 @@
       </RouterLink>
 
       <nav class="main-nav" aria-label="Main" ref="navEl" @mouseleave="hovered = null">
-        <RouterLink v-for="link in links" :key="link.to" :to="link.to" class="nav-link" :class="{ active: isActive(link) }" @mouseenter="hovered = link.to">{{ link.label }}</RouterLink>
+        <template v-for="link in links" :key="link.to || link.href">
+          <a v-if="link.href" :href="link.href" target="_blank" rel="noopener" class="nav-link" @mouseenter="hovered = link.href">{{ link.label }}</a>
+          <RouterLink v-else :to="link.to" class="nav-link" :class="{ active: isActive(link) }" @mouseenter="hovered = link.to">{{ link.label }}</RouterLink>
+        </template>
         <span class="nav-indicator" :style="indicator" aria-hidden="true"></span>
       </nav>
 
@@ -36,7 +39,10 @@
     </div>
     <Transition name="drawer">
       <nav v-if="mobileOpen" class="mobile-nav" aria-label="Mobile">
-        <RouterLink v-for="link in links" :key="link.to" :to="link.to" :class="{ active: isActive(link) }" @click="mobileOpen = false">{{ link.label }}<ChevronRight :size="16" /></RouterLink>
+        <template v-for="link in links" :key="link.to || link.href">
+          <a v-if="link.href" :href="link.href" target="_blank" rel="noopener" @click="mobileOpen = false">{{ link.label }}<ChevronRight :size="16" /></a>
+          <RouterLink v-else :to="link.to" :class="{ active: isActive(link) }" @click="mobileOpen = false">{{ link.label }}<ChevronRight :size="16" /></RouterLink>
+        </template>
         <button type="button" class="button button-primary" @click="mobileOpen = false; showDownloadModal()"><Download :size="16" />Download</button>
       </nav>
     </Transition>
@@ -53,8 +59,8 @@ import { showDownloadModal } from '../lib/ui.js';
 import { config } from '../config.js';
 
 const route = useRoute();
-const links = [{ to: '/', label: 'Home' }, { to: '/news', label: 'News' }, { to: '/guide', label: 'Guide' }, { to: '/store', label: 'Store' }];
-const isActive = link => link.to === '/' ? route.path === '/' : route.path.startsWith(link.to);
+const links = [{ to: '/', label: 'Home' }, { to: '/news', label: 'News' }, { to: '/guide', label: 'Guide' }, { href: config.storeUrl, label: 'Store' }];
+const isActive = link => link.to ? (link.to === '/' ? route.path === '/' : route.path.startsWith(link.to)) : false;
 const scrolled = ref(false), menuOpen = ref(false), mobileOpen = ref(false), hovered = ref(null);
 const navEl = ref(), profileEl = ref(), rects = ref({});
 
@@ -62,7 +68,7 @@ const navEl = ref(), profileEl = ref(), rects = ref({});
 function measure() {
   if (!navEl.value) return;
   const base = navEl.value.getBoundingClientRect();
-  rects.value = Object.fromEntries([...navEl.value.querySelectorAll('.nav-link')].map((el, i) => { const r = el.getBoundingClientRect(); return [links[i].to, { left: r.left - base.left, width: r.width }]; }));
+  rects.value = Object.fromEntries([...navEl.value.querySelectorAll('.nav-link')].map((el, i) => { const r = el.getBoundingClientRect(); return [links[i].to || links[i].href, { left: r.left - base.left, width: r.width }]; }));
 }
 const indicator = computed(() => {
   const target = hovered.value ?? links.find(isActive)?.to;

@@ -4,4 +4,6 @@ export const config = {
   discordClientId: '1564275479257555004',
   // Set this to the server's invite link (https://discord.gg/...) once it exists.
   discordInvite: '',
+  // The Store nav link points here (opens in a new tab).
+  storeUrl: 'https://www.patreon.com/cw/skoomarp',
 };
