@@ -23,7 +23,7 @@ export const guide = [
       ] },
       { id: 'game-version', title: 'Install the required game version', blocks: [
         { type: 'p', text: 'The server runs on Skyrim 1.6.1170. If your game is a different version, the Play button changes to Install game version.' },
-        { type: 'steps', items: ['Press Install game version.', 'A Steam download window opens. Scan its QR code with the Steam mobile app — your Steam login stays in that window.', 'When it finishes, the launcher continues on its own.'] },
+        { type: 'steps', items: ['Press Install game version.', 'A Steam download window opens. Scan its QR code with the Steam mobile app - your Steam login stays in that window.', 'When it finishes, the launcher continues on its own.'] },
       ] },
       { id: 'install-mods', title: 'Install the mods', blocks: [
         { type: 'p', text: 'Press Install & update. The launcher downloads SKSE, the multiplayer client and the required mods, checks every file, and enables the mods\' plugins.' },

@@ -347,3 +347,37 @@ kbd { display: inline-grid; place-items: center; min-width: 36px; height: 34px; 
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- Downloads-disabled popup + page ---------- */
+.footer-link { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; transition: color .2s; }
+.footer-link:hover { color: #fff; }
+
+.dl-overlay { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 20px; background: rgba(7, 6, 10, .72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.dl-card { position: relative; width: min(420px, 100%); padding: 38px 30px 30px; border-radius: 16px; text-align: center; background: linear-gradient(180deg, #16131d, #100e15); border: 1px solid var(--line-strong); box-shadow: 0 40px 90px -30px #000, inset 0 1px 0 #ffffff0d; display: flex; flex-direction: column; align-items: center; }
+.dl-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px; color: var(--muted); transition: background-color .2s, color .2s, transform .3s var(--spring); }
+.dl-close:hover { background: rgba(255,255,255,.07); color: #fff; }
+.dl-close:active { transform: scale(.9); }
+.dl-icon { position: relative; width: 62px; height: 62px; display: grid; place-items: center; border-radius: 50%; margin-bottom: 18px; color: var(--purple-light); background: rgba(106,59,181,.16); border: 1px solid #c2a0f044; }
+.dl-icon.large { width: 74px; height: 74px; margin-bottom: 20px; }
+.dl-icon .dl-ring { position: absolute; inset: -6px; border-radius: 50%; border: 1px solid #c2a0f055; animation: dl-ring 2.4s ease-out infinite; }
+@keyframes dl-ring { 0% { transform: scale(.85); opacity: .7; } 100% { transform: scale(1.35); opacity: 0; } }
+.dl-badge { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 14px; padding: 5px 13px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #e3cdf8; background: rgba(106,59,181,.18); border: 1px solid #c2a0f033; }
+.dl-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--purple-light); box-shadow: 0 0 9px var(--purple-light); animation: pulse 1.4s ease-in-out infinite; }
+.dl-card h2, .dl-page h1 { font-family: var(--serif); font-weight: 400; letter-spacing: .04em; margin: 0 0 10px; }
+.dl-card h2 { font-size: 23px; }
+.dl-card p, .dl-page p { margin: 0 0 24px; color: var(--muted); font-size: 14.5px; line-height: 1.6; max-width: 34ch; }
+.dl-ok { min-width: 150px; }
+
+/* Direct visits to /download show the same notice as a page */
+.dl-page { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.dl-page h1 { font-size: clamp(28px, 4vw, 40px); }
+.dl-page p { font-size: 15.5px; max-width: 42ch; }
+
+.dl-modal-enter-active .dl-card { transition: opacity .35s ease, transform .45s var(--spring); }
+.dl-modal-enter-active { transition: opacity .3s ease; }
+.dl-modal-leave-active { transition: opacity .2s ease; }
+.dl-modal-leave-active .dl-card { transition: opacity .2s ease, transform .2s ease; }
+.dl-modal-enter-from { opacity: 0; }
+.dl-modal-enter-from .dl-card { opacity: 0; transform: translateY(16px) scale(.94); }
+.dl-modal-leave-to { opacity: 0; }
+.dl-modal-leave-to .dl-card { opacity: 0; transform: scale(.97); }

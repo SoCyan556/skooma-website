@@ -30,14 +30,14 @@
           </Transition>
         </div>
         <RouterLink v-else to="/login" class="icon-button" aria-label="Sign in" data-tip="Sign in"><CircleUserRound :size="21" :stroke-width="1.6" /></RouterLink>
-        <RouterLink to="/download" class="button button-primary header-download"><Download :size="16" />Download</RouterLink>
+        <button type="button" class="button button-primary header-download" @click="showDownloadModal"><Download :size="16" />Download</button>
         <button class="icon-button menu-toggle" :aria-expanded="mobileOpen" aria-label="Menu" @click="mobileOpen = !mobileOpen"><X v-if="mobileOpen" :size="20" /><Menu v-else :size="20" /></button>
       </div>
     </div>
     <Transition name="drawer">
       <nav v-if="mobileOpen" class="mobile-nav" aria-label="Mobile">
         <RouterLink v-for="link in links" :key="link.to" :to="link.to" :class="{ active: isActive(link) }" @click="mobileOpen = false">{{ link.label }}<ChevronRight :size="16" /></RouterLink>
-        <RouterLink to="/download" class="button button-primary" @click="mobileOpen = false"><Download :size="16" />Download</RouterLink>
+        <button type="button" class="button button-primary" @click="mobileOpen = false; showDownloadModal()"><Download :size="16" />Download</button>
       </nav>
     </Transition>
   </header>
@@ -49,6 +49,7 @@ import { useRoute } from 'vue-router';
 import { ChevronDown, ChevronRight, CircleUserRound, Download, LayoutDashboard, LogOut, Menu, Settings, UsersRound, X } from 'lucide-vue-next';
 import DiscordIcon from './DiscordIcon.vue';
 import { auth, signOut } from '../lib/auth.js';
+import { showDownloadModal } from '../lib/ui.js';
 import { config } from '../config.js';
 
 const route = useRoute();

@@ -10,7 +10,7 @@
         <h1 class="hero-title" aria-label="Skooma"><span v-for="(letter, i) in 'SKOOMA'" :key="i" :style="{ '--i': i }" aria-hidden="true">{{ letter }}</span></h1>
         <div class="hero-divider" aria-hidden="true"><i></i><Diamond :size="12" :stroke-width="1.5" /><i></i></div>
         <p class="hero-tagline">A persistent Skyrim roleplay server</p>
-        <RouterLink to="/download" class="button button-primary button-large hero-play"><Download :size="19" />Play now</RouterLink>
+        <button type="button" class="button button-primary button-large hero-play" @click="showDownloadModal"><Download :size="19" />Play now</button>
         <p class="hero-meta" v-if="latest">Version {{ latest.version }}</p>
       </div>
       <a href="#home-panels" class="scroll-cue" aria-label="Scroll down"><ChevronDown :size="22" /></a>
@@ -51,6 +51,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import { ArrowRight, BookOpen, ChevronDown, ChevronRight, Diamond, Download, LifeBuoy, Mic } from 'lucide-vue-next';
 import { formatDate, loadReleases } from '../lib/releases.js';
+import { showDownloadModal } from '../lib/ui.js';
 
 const latest = ref(null), error = ref(false);
 onMounted(() => loadReleases().then(list => { latest.value = list[0] ?? null; }).catch(() => { error.value = true; }));
