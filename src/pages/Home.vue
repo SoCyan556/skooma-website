@@ -1,7 +1,7 @@
 <template>
   <main class="home">
     <section class="hero" @pointermove="tilt" @pointerleave="resetTilt">
-      <div class="hero-art" :style="{ transform: `translate3d(${pointer.x * -12}px, ${pointer.y * -8}px, 0) scale(1.06)` }"></div>
+      <HeroFluid />
       <div class="hero-shade"></div>
       <div class="hero-content">
         <div class="hero-bottle-wrap" :style="{ transform: `rotateX(${pointer.y * -10}deg) rotateY(${pointer.x * 14}deg)` }">
@@ -52,6 +52,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { ArrowRight, BookOpen, ChevronDown, ChevronRight, Diamond, Download, LifeBuoy, Mic } from 'lucide-vue-next';
 import { formatDate, loadReleases } from '../lib/releases.js';
 import { showDownloadModal } from '../lib/ui.js';
+import HeroFluid from '../components/HeroFluid.vue';
 
 const latest = ref(null), error = ref(false);
 onMounted(() => loadReleases().then(list => { latest.value = list[0] ?? null; }).catch(() => { error.value = true; }));
